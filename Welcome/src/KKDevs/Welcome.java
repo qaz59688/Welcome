@@ -15,7 +15,7 @@ import cn.nukkit.utils.TextFormat;
 
 public class Welcome extends PluginBase implements Listener {
 
-public HashMap < String, Long > bossbar = new HashMap < String, Long > ();
+ public HashMap < String, Long > bossbar = new HashMap < String, Long > ();
  String message;
  String submessage;
 
@@ -39,14 +39,14 @@ public HashMap < String, Long > bossbar = new HashMap < String, Long > ();
 
   e.setJoinMessage("");
   this.message = this.getConfig().getString("Message", "§l§aNameServer").replace("§", "\u00A7");
-  this.submessage = this.getConfig().getString("SubMessage", "§l§b>>  §fприятной игры  §b<<").replace("§", "\u00A7");
+  this.submessage = this.getConfig().getString("SubMessage", "§l§b>>  §fHave a nice game  §b<<").replace("§", "\u00A7");
   new NukkitRunnable() {
    public void run() {
     e.getPlayer().setSubtitle("§l" + submessage + "\n");
     e.getPlayer().sendTitle("§l" + message);
    }
   }.runTaskLater(this, 21);
-   bossbar.put(e.getPlayer().getName(), e.getPlayer().createBossBar(getBossText(e.getPlayer()), 100));
+  bossbar.put(e.getPlayer().getName(), e.getPlayer().createBossBar(getBossText(e.getPlayer()), 100));
  }
 
  @EventHandler
@@ -61,21 +61,21 @@ public HashMap < String, Long > bossbar = new HashMap < String, Long > ();
 
 
  public String getBossText(Player p) {
-   int getOnline = this.getServer().getOnlinePlayers().size();
-   String getNick = p.getDisplayName();
-   String[] RC = {
-    "§l§f",
-    "§l§a",
-    "§l§e",
-    "§l§b",
-    "§l§6"
-   };
-   String getRandomColor = RC[new Random().nextInt(RC.length)];
-   TextFormat GREEN = TextFormat.GREEN;
-   TextFormat BLUE = TextFormat.BLUE;
-   
-String text = TextFormat.WHITE + "§l>>   " + getRandomColor + "Добро пожаловать на " + GREEN + message + getRandomColor + ", " + BLUE + getNick + getRandomColor + " | Онлайн: " + getOnline + TextFormat.WHITE + "   <<";
-   return text;
+  int getOnline = this.getServer().getOnlinePlayers().size();
+  String getNick = p.getDisplayName();
+  String[] RC = {
+   "§l§f",
+   "§l§a",
+   "§l§e",
+   "§l§b",
+   "§l§6"
+  };
+  String getRandomColor = RC[new Random().nextInt(RC.length)];
+  TextFormat GREEN = TextFormat.GREEN;
+  TextFormat BLUE = TextFormat.BLUE;
+
+  String text = TextFormat.WHITE + "§l>>   " + getRandomColor + "Welcome to " + GREEN + message + getRandomColor + ", " + BLUE + getNick + getRandomColor + " | Online: " + getOnline + TextFormat.WHITE + "   <<";
+  return text;
  }
 
 }
