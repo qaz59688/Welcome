@@ -1,6 +1,4 @@
 # Welcome
-Is plugin by @KKDevs
-
-Plugin for nukkit
+Is plugin by @KKDevs for nukkit
 
 Finished and work
