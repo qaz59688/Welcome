@@ -16,12 +16,7 @@ public class BossBarTask extends PluginTask < Welcome > {
   Welcome owner = this.owner;
   for (Player p: owner.getServer().getOnlinePlayers().values()) {
 	   try {
-		   while(true) {
-		for (int x = -25; x <= 100; x = x + 25, Thread.sleep(75)) {
-			p.getPlayer().updateBossBar(owner.getBossText(p), x, owner.bossbar.get(p.getName()));
-		}
-		   }
-	  // p.getPlayer().updateBossBar(owner.getBossText(p), x, owner.bossbar.get(p.getName()));
+	  p.getPlayer().updateBossBar(owner.getBossText(p), 100, owner.bossbar.get(p.getName()));
 	   
    } catch (Exception e) {}
   }
