@@ -16,37 +16,49 @@ import cn.nukkit.utils.TextFormat;
 public class Welcome extends PluginBase implements Listener {
 
  public HashMap < String, Long > bossbar = new HashMap < String, Long > ();
- String message;
- String submessage;
-
+ 
+ String SubMessage;
+ 
+ String Name;
+ 
+ int time;
+ 
+ public void initConfig(){
+this.getDataFolder().mkdirs();
+this.saveResource("config.yml");
+}
+ 
+ 
+ public void loadCfg(){
+this.reloadConfig();
+this.Name = this.getConfig().getString("NameServer","§aName§fServer").replace("§", "\u00A7");
+this.SubMessage = this.getConfig().getString("SubMessage", "§l§b>>  §fHave a nice game  §b<<").replace("§", "\u00A7");
+this.time = this.getConfig().getInt("time", 60);
+}
+ 
+ 
  @Override
  public void onEnable() {
   getServer().getPluginManager().registerEvents(this, this);
-  getServer().getScheduler().scheduleRepeatingTask(new BossBarTask(this), 20);
-  this.getLogger().info(TextFormat.GREEN + "Enable!");
-  this.getDataFolder().mkdirs();
-  this.saveDefaultConfig();
-  this.getConfig();
+  this.initConfig();
+  this.loadCfg();
+  getServer().getScheduler().scheduleRepeatingTask(new BossBarTask(this), this.time);
  }
+ 
+ 
 
- @Override
- public void onDisable() {
-  this.getLogger().info(TextFormat.RED + "Disable!");
- }
-
- @EventHandler
+ @SuppressWarnings("deprecation")
+@EventHandler
  public void onJoin(PlayerJoinEvent e) {
 
   e.setJoinMessage("");
-  this.message = this.getConfig().getString("Message", "Â§lÂ§aNameServer").replace("Â§", "\u00A7");
-  this.submessage = this.getConfig().getString("SubMessage", "Â§lÂ§b>>  Â§fHave a nice game  Â§b<<").replace("Â§", "\u00A7");
   new NukkitRunnable() {
    public void run() {
-    e.getPlayer().setSubtitle("Â§l" + submessage + "\n");
-    e.getPlayer().sendTitle("Â§l" + message);
+    e.getPlayer().setSubtitle("§l" + SubMessage + "\n");
+    e.getPlayer().sendTitle("§l" + Name);
    }
-  }.runTaskLater(this, 21);
-  bossbar.put(e.getPlayer().getName(), e.getPlayer().createBossBar(getBossText(e.getPlayer()), 100));
+  }.runTaskLater(this, 75);
+  bossbar.put(e.getPlayer().getName(), e.getPlayer().createBossBar(getBossText(e.getPlayer()), 25));
  }
 
  @EventHandler
@@ -64,17 +76,21 @@ public class Welcome extends PluginBase implements Listener {
   int getOnline = this.getServer().getOnlinePlayers().size();
   String getNick = p.getDisplayName();
   String[] RC = {
-   "Â§lÂ§f",
-   "Â§lÂ§a",
-   "Â§lÂ§e",
-   "Â§lÂ§b",
-   "Â§lÂ§6"
+   "§l§f",
+   "§l§a",
+   "§l§e",
+   "§l§b",
+   "§l§6"
   };
   String getRandomColor = RC[new Random().nextInt(RC.length)];
   TextFormat GREEN = TextFormat.GREEN;
   TextFormat BLUE = TextFormat.BLUE;
 
-  String text = TextFormat.WHITE + "Â§l>>   " + getRandomColor + "Welcome to " + GREEN + message + getRandomColor + ", " + BLUE + getNick + getRandomColor + " | Online: " + getOnline + TextFormat.WHITE + "   <<";
+  String text = TextFormat.WHITE + "      §l>>   " + getRandomColor + "Welcîme to " + GREEN + Name + getRandomColor + ", " + BLUE + getNick + getRandomColor + " | Online: " + getOnline + TextFormat.WHITE + "   <<";
+  
+  
+  
+  
   return text;
  }
 
