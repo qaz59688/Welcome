@@ -1,0 +1,5 @@
+Title: §l§aName§fServer
+SubTitle: §l§b>> §fHave a nice game §b<<
+BossBar_Text: '      §l§f>>  {rnd} Welcоme to {Title}{rnd}, §b{name}{rnd} | Online:
+  {online}   §f<<'
+interval: 20
